@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import { env } from "./src/config";
+import ingestRouter from "./src/routes/ingest";
+import queryRouter from "./src/routes/query";
 import uploadRouter from "./src/routes/upload";
 import collectionRouter from "./src/routes/collection";
 
@@ -13,6 +15,10 @@ app.use(
 );
 
 app.use(express.json());
+
+app.use("/ingest", ingestRouter);
+
+app.use("/query", queryRouter);
 
 app.use("/uploads", uploadRouter);
 
