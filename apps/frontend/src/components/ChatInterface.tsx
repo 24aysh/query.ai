@@ -1,22 +1,7 @@
-/**
- * ChatInterface.tsx
- *
- * Renders the message history as a scrollable chat feed.
- * Each message is displayed as a styled bubble:
- *  - User messages  → right-aligned, amber background
- *  - Assistant msgs → left-aligned, white card with subtle shadow
- *  - Typing state   → animated three-dot indicator
- *
- * The component auto-scrolls to the newest message on every update.
- */
 
 import { useEffect, useRef } from "react";
 import { Bot, User } from "lucide-react";
 import type { RetrievedChunk } from "../api/ragClient";
-
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
 
 export type MessageRole = "user" | "assistant";
 
@@ -24,22 +9,15 @@ export interface Message {
   id: string;
   role: MessageRole;
   content: string;
-  /** Chunks retrieved from Qdrant, attached to assistant messages only. */
   context?: RetrievedChunk[];
   timestamp: Date;
 }
 
 interface ChatInterfaceProps {
   messages: Message[];
-  /** When true, displays the animated typing indicator after the last message. */
   isLoading: boolean;
 }
 
-// ---------------------------------------------------------------------------
-// Sub-components
-// ---------------------------------------------------------------------------
-
-/** Three-dot animated typing indicator shown while the LLM is generating. */
 function TypingIndicator() {
   return (
     <div className="flex items-end gap-3 chat-bubble-enter">
@@ -84,20 +62,9 @@ function ContextPanel({ chunks }: { chunks: RetrievedChunk[] }) {
   );
 }
 
-// ---------------------------------------------------------------------------
-// Main component
-// ---------------------------------------------------------------------------
-
-/**
- * ChatInterface — Scrollable feed of user and assistant messages.
- *
- * @param messages  - Ordered array of conversation messages.
- * @param isLoading - Whether to show the typing indicator.
- */
 export function ChatInterface({ messages, isLoading }: ChatInterfaceProps) {
   const bottomRef = useRef<HTMLDivElement>(null);
 
-  /** Auto-scroll to the bottom whenever messages or loading state changes. */
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isLoading]);
@@ -123,17 +90,15 @@ export function ChatInterface({ messages, isLoading }: ChatInterfaceProps) {
       {messages.map((msg) => (
         <div
           key={msg.id}
-          className={`flex items-end gap-3 chat-bubble-enter ${
-            msg.role === "user" ? "flex-row-reverse" : "flex-row"
-          }`}
+          className={`flex items-end gap-3 chat-bubble-enter ${msg.role === "user" ? "flex-row-reverse" : "flex-row"
+            }`}
         >
           {/* Avatar */}
           <div
-            className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
-              msg.role === "user"
+            className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${msg.role === "user"
                 ? "bg-[#C17B2A]"
                 : "bg-[#FFF3DC] border border-[#E8DCC8]"
-            }`}
+              }`}
           >
             {msg.role === "user" ? (
               <User className="w-4 h-4 text-white" />
@@ -145,11 +110,10 @@ export function ChatInterface({ messages, isLoading }: ChatInterfaceProps) {
           {/* Bubble */}
           <div className={`max-w-[75%] ${msg.role === "user" ? "items-end" : "items-start"} flex flex-col`}>
             <div
-              className={`px-4 py-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
-                msg.role === "user"
+              className={`px-4 py-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${msg.role === "user"
                   ? "bg-[#C17B2A] text-white rounded-br-sm"
                   : "bg-white text-[#2C2416] border border-[#E8DCC8] shadow-sm rounded-bl-sm"
-              }`}
+                }`}
             >
               {msg.content}
             </div>

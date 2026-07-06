@@ -1,20 +1,5 @@
-/**
- * QueryInput.tsx
- *
- * Text input bar at the bottom of the chat area.
- * Allows the user to type a question and submit it with:
- *   - The "Send" button
- *   - Enter key (Shift+Enter inserts a newline instead)
- *
- * The input auto-resizes up to ~120 px tall as the user types.
- */
-
 import { useRef, type KeyboardEvent } from "react";
 import { Send } from "lucide-react";
-
-// ---------------------------------------------------------------------------
-// Props
-// ---------------------------------------------------------------------------
 
 interface QueryInputProps {
   /** Current text value (controlled). */
@@ -27,22 +12,6 @@ interface QueryInputProps {
   disabled?: boolean;
 }
 
-// ---------------------------------------------------------------------------
-// Component
-// ---------------------------------------------------------------------------
-
-/**
- * QueryInput — Auto-growing textarea + Send button.
- *
- * Keyboard behaviour:
- *  - Enter        → submit (equivalent to clicking Send)
- *  - Shift+Enter  → newline (multi-line queries)
- *
- * @param value    - Controlled text value.
- * @param onChange - Value change callback.
- * @param onSubmit - Submit callback.
- * @param disabled - Disables all interaction.
- */
 export function QueryInput({ value, onChange, onSubmit, disabled }: QueryInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -78,7 +47,7 @@ export function QueryInput({ value, onChange, onSubmit, disabled }: QueryInputPr
         onKeyDown={handleKeyDown}
         disabled={disabled}
         rows={1}
-        placeholder="Ask a question about your document… (Enter to send)"
+        placeholder="Hi, How can I help you"
         aria-label="Your question"
         className={[
           "flex-1 resize-none bg-transparent text-sm text-[#2C2416] placeholder:text-[#8A7355]",

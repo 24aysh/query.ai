@@ -1,39 +1,13 @@
-/**
- * FileUpload.tsx
- *
- * Drag-and-drop PDF upload component.
- * Accepts a PDF file via drag-and-drop or click-to-browse, then
- * exposes the selected File object to the parent via `onFileSelect`.
- */
-
 import { useCallback, useRef, useState } from "react";
 import { Upload, FileText, X } from "lucide-react";
 
-// ---------------------------------------------------------------------------
-// Props
-// ---------------------------------------------------------------------------
-
 interface FileUploadProps {
-  /** Called whenever the user selects or drops a new PDF. */
   onFileSelect: (file: File | null) => void;
   /** The currently selected file (controlled from parent). */
   selectedFile: File | null;
   /** Disable the control while a request is in-flight. */
   disabled?: boolean;
 }
-
-// ---------------------------------------------------------------------------
-// Component
-// ---------------------------------------------------------------------------
-
-/**
- * FileUpload — Drag-and-drop / click-to-browse PDF selector.
- *
- * Visual states:
- *  - Default:   dashed cream border with upload icon
- *  - Drag over: amber-tinted border with glow
- *  - File set:  compact row showing filename + clear button
- */
 export function FileUpload({ onFileSelect, selectedFile, disabled }: FileUploadProps) {
   const [isDragOver, setIsDragOver] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -92,8 +66,6 @@ export function FileUpload({ onFileSelect, selectedFile, disabled }: FileUploadP
       </div>
     );
   }
-
-  // ── Render: empty drop zone ────────────────────────────────────────────
   return (
     <div
       onDrop={handleDrop}
