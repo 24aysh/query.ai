@@ -6,6 +6,14 @@ Query.AI is a Retrieval-Augmented Generation (RAG) chatbot that lets you have a 
 
 ---
 
+## Screenshots
+
+| Document indexed & answer generated | Source chunks revealed |
+|---|---|
+| ![Answer view](sample/example2.png) | ![Source chunks](sample/example1.png) |
+
+---
+
 ## Architecture
 
 ### High-Level Request Flow
@@ -156,70 +164,6 @@ bun run dev
 cd apps/backend  && bun --hot index.ts    # → http://localhost:3001
 cd apps/frontend && bun run dev           # → http://localhost:3000
 ```
-
----
-
-## API Reference
-
-### `POST /uploads`
-
-Upload a PDF and query the document.
-
-**Request** — `multipart/form-data`
-
-| Field | Type | Description |
-|---|---|---|
-| `pdf` | File | The PDF document |
-| `query` | string | Natural-language question |
-
-**Response**
-
-```json
-{
-  "answer": "The document states that...",
-  "context": [
-    { "text": "...", "score": 0.93 }
-  ],
-  "meta": {
-    "totalChunks": 42,
-    "model": "gemini-2.5-flash-lite",
-    "collection": "query_ai"
-  }
-}
-```
-
-### `GET /create-collection`
-
-Creates the Qdrant vector collection (run once before first upload).
-
-### `GET /health`
-
-Returns `{ "status": "ok" }` — useful for health checks.
-
----
-
-## Project Scripts
-
-From the repo root:
-
-```bash
-bun run dev          # Start all apps in development mode
-bun run build        # Build all apps for production
-bun run lint         # Lint all packages
-bun run check-types  # TypeScript type-check all packages
-bun run format       # Format all TS/TSX/MD files with Prettier
-```
-
----
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feat/your-feature`
-3. Commit with conventional commits: `feat:`, `fix:`, `refactor:`, `docs:`, `chore:`
-4. Open a Pull Request
-
----
 
 ## License
 
